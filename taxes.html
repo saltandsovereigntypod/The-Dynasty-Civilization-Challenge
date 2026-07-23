@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Track weekly taxes and treasury spending for the Dynasty & Civilization Challenge." />
+  <title>Treasury & Taxes | The Dynasty & Civilization Challenge</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">The Dynasty & Civilization Challenge</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a class="active" href="taxes.html">Treasury & Taxes</a>
+      <a href="chapters.html">Chapters</a>
+    </nav>
+  </header>
+
+  <main class="narrow-main">
+    <section class="page-heading">
+      <p class="eyebrow">Civilization Treasury</p>
+      <h1>Taxes & Public Spending</h1>
+      <p>
+        Enter the number of households living outside the active Dynasty household.
+        Once per in-game week, collect taxes and add them to the civilization treasury.
+        Record deductions whenever the civilization pays for a public building or improvement.
+      </p>
+    </section>
+
+    <section class="treasury-total" aria-live="polite">
+      <span>Current Treasury</span>
+      <strong id="treasuryBalance">§0</strong>
+    </section>
+
+    <section class="form-panel">
+      <h2>Collect Weekly Taxes</h2>
+      <div class="form-grid">
+        <label>
+          Outside households
+          <input id="householdCount" type="number" min="0" step="1" value="0" />
+        </label>
+        <label>
+          Tax per household
+          <input id="taxRate" type="number" min="0" step="1" value="100" />
+        </label>
+      </div>
+      <p class="calculation" id="taxPreview">Weekly collection: §0</p>
+      <button class="button primary" id="payTaxesButton" type="button">Pay Taxes</button>
+    </section>
+
+    <section class="form-panel">
+      <h2>Record Treasury Spending</h2>
+      <div class="form-grid">
+        <label>
+          Amount spent
+          <input id="expenseAmount" type="number" min="0" step="1" placeholder="0" />
+        </label>
+        <label>
+          Purpose
+          <input id="expenseReason" type="text" placeholder="Marketplace construction" />
+        </label>
+      </div>
+      <button class="button secondary" id="deductButton" type="button">Deduct Expense</button>
+      <p class="status-message" id="taxStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="wide-panel">
+      <div class="section-heading-row">
+        <div>
+          <p class="eyebrow">Chronicle</p>
+          <h2>Treasury History</h2>
+        </div>
+        <button class="text-button danger" id="clearHistoryButton" type="button">Reset treasury</button>
+      </div>
+      <div id="transactionHistory" class="transaction-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Your treasury is stored locally in this browser.</p>
+  </footer>
+
+  <script src="taxes.js"></script>
+</body>
+</html>

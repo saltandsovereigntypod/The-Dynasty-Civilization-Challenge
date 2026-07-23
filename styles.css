@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #25251f;
+  --muted: #6a6a5e;
+  --paper: #f4f0e7;
+  --panel: #fffdf8;
+  --border: #d8d0c0;
+  --forest: #435846;
+  --forest-dark: #314136;
+  --gold: #a07d43;
+  --danger: #8a3f35;
+  --shadow: 0 12px 30px rgba(54, 48, 36, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(160, 125, 67, 0.08), transparent 35%),
+    var(--paper);
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3, blockquote, .brand {
+  font-family: "Cormorant Garamond", serif;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 6.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.45rem;
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  background: rgba(244, 240, 231, 0.94);
+  border-bottom: 1px solid rgba(216, 208, 192, 0.8);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+nav a {
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a.active {
+  color: white;
+  background: var(--forest);
+}
+
+main {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.narrow-main {
+  width: min(920px, calc(100% - 2rem));
+}
+
+.hero {
+  padding: clamp(5rem, 12vw, 10rem) 0 5rem;
+  max-width: 980px;
+}
+
+.hero-copy {
+  max-width: 730px;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+
+.eyebrow {
+  margin-bottom: 0.55rem;
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.78rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button.primary {
+  color: white;
+  background: var(--forest);
+}
+
+.button.primary:hover {
+  background: var(--forest-dark);
+}
+
+.button.secondary {
+  color: var(--forest);
+  background: transparent;
+  border-color: var(--forest);
+}
+
+.button.secondary:hover {
+  background: rgba(67, 88, 70, 0.08);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.content-grid.two-column {
+  margin-top: 1.1rem;
+}
+
+.panel,
+.wide-panel,
+.form-panel,
+.chapter-progress-panel {
+  padding: clamp(1.4rem, 4vw, 2.25rem);
+  background: rgba(255, 253, 248, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.wide-panel,
+.form-panel,
+.chapter-progress-panel {
+  margin-bottom: 1.1rem;
+}
+
+.quote-panel {
+  padding: 5rem 1rem;
+  text-align: center;
+}
+
+.quote-panel blockquote,
+.chapter-heading blockquote {
+  margin: 0;
+  color: var(--forest);
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.rule-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem 2rem;
+  margin-top: 2rem;
+}
+
+.rule-list p,
+.panel p,
+.wide-panel p,
+.page-heading p {
+  color: var(--muted);
+}
+
+.page-heading {
+  padding: clamp(4rem, 10vw, 7rem) 0 2rem;
+}
+
+.page-heading h1 {
+  font-size: clamp(3.3rem, 8vw, 5.8rem);
+}
+
+.subtitle {
+  margin-top: -0.75rem;
+  color: var(--gold) !important;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.chapter-heading blockquote {
+  max-width: 760px;
+  margin-top: 2.5rem;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.treasury-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  color: white;
+  background: var(--forest);
+  border-radius: 18px;
+}
+
+.treasury-total span {
+  font-weight: 700;
+}
+
+.treasury-total strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  line-height: 1;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ink);
+  background: white;
+  font: inherit;
+}
+
+input:focus {
+  outline: 3px solid rgba(67, 88, 70, 0.18);
+  border-color: var(--forest);
+}
+
+.calculation {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.status-message {
+  min-height: 1.5rem;
+  margin: 1rem 0 0;
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.section-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.text-button.danger {
+  color: var(--danger);
+}
+
+.transaction-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.transaction {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.transaction:last-child {
+  border-bottom: 0;
+}
+
+.transaction strong {
+  font-size: 1.05rem;
+}
+
+.transaction small {
+  display: block;
+  color: var(--muted);
+}
+
+.transaction .positive {
+  color: var(--forest);
+}
+
+.transaction .negative {
+  color: var(--danger);
+}
+
+.empty-state {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.chapter-progress-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.chapter-progress-panel > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 700;
+}
+
+.progress-track {
+  height: 12px;
+  overflow: hidden;
+  background: #e2ddcf;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--forest);
+  transition: width 180ms ease;
+}
+
+.rule-block {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.checklist-group {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.checklist-group:first-of-type {
+  margin-top: 1rem;
+}
+
+.check-item {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: start;
+  gap: 0.8rem;
+  padding: 0.65rem 0;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.check-item input {
+  width: 18px;
+  height: 18px;
+  margin: 0.25rem 0 0;
+  accent-color: var(--forest);
+}
+
+.check-item input:checked + span {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.achievement-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+footer {
+  padding: 3rem 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    position: static;
+    display: block;
+  }
+
+  .brand {
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  nav {
+    gap: 0.25rem;
+  }
+
+  nav a {
+    padding-inline: 0.65rem;
+  }
+
+  .content-grid,
+  .rule-list,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading-row,
+  .treasury-total,
+  .chapter-progress-panel > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
