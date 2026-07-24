@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Read Chapter I and track every objective in the Dynasty & Civilization Challenge." />
+  <meta name="description" content="Play Chapter I, track objectives, manage the treasury, and preserve your Dynasty Chronicle." />
   <title>Chapters | The Dynasty & Civilization Challenge</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -22,224 +22,75 @@
       <p class="eyebrow">Chapter I</p>
       <h1>The Founder</h1>
       <p class="subtitle">The Age of Survival</p>
-      <blockquote>
-        “Every civilization begins with someone willing to build where nothing yet exists.”
-      </blockquote>
+      <blockquote>“Every civilization begins with someone willing to build where nothing yet exists.”</blockquote>
     </section>
 
     <section class="chapter-progress-panel">
-      <div>
-        <span>Chapter Progress</span>
-        <strong id="progressText">0 of 0 complete</strong>
-      </div>
-      <div class="progress-track" aria-hidden="true">
-        <div id="progressBar" class="progress-fill"></div>
-      </div>
+      <div><span>Chapter Progress</span><strong id="progressText">0 of 0 complete</strong></div>
+      <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-fill"></div></div>
     </section>
 
-    <section class="wide-panel">
-      <p class="eyebrow">Theme</p>
-      <h2>Survival · Self-Sufficiency · Hope</h2>
-      <p>
-        Your founders arrive in an untamed land with little more than determination
-        and the hope of building something that will outlive them. There are no
-        neighbors, institutions, or public spaces. There is only a small home, open
-        land, and the responsibility of creating a future where none yet exists.
-      </p>
-      <p>
-        Everything that follows throughout the next nineteen chapters depends upon
-        the choices made here.
-      </p>
+    <section class="wide-panel treasury-widget">
+      <div class="section-heading-row"><div><p class="eyebrow">Civilization Treasury</p><h2>Weekly Taxes</h2></div><strong class="widget-balance" id="chapterTreasuryBalance">§0</strong></div>
+      <div class="form-grid treasury-widget-grid">
+        <label>Outside households<input id="chapterHouseholdCount" type="number" min="0" step="1" value="0" /></label>
+        <label>Tax per household<input id="chapterTaxRate" type="number" min="0" step="1" value="100" /></label>
+      </div>
+      <p class="calculation" id="chapterTaxPreview">Weekly collection: §0</p>
+      <div class="button-row compact-row"><button class="button primary" id="chapterPayTaxesButton" type="button">Collect Weekly Taxes</button><a class="button secondary" href="taxes.html">Open Full Treasury</a></div>
+      <p class="status-message" id="chapterTaxStatus" aria-live="polite"></p>
     </section>
 
-    <section class="wide-panel">
-      <p class="eyebrow">The Question</p>
-      <h2>Can one family create a foundation strong enough for a civilization to grow?</h2>
-      <p>
-        During this chapter, the entire civilization consists of one household.
-        Every meal must be earned, every improvement must be built, and every
-        relationship outside the Dynasty must be sought beyond its borders.
-      </p>
-    </section>
+    <section class="wide-panel"><p class="eyebrow">Theme</p><h2>Survival · Self-Sufficiency · Hope</h2><p>Your founders arrive in an untamed land with little more than determination and the hope of building something that will outlive them. There are no neighbors, institutions, or public spaces. There is only a small home, open land, and the responsibility of creating a future where none yet exists.</p><p>Everything that follows throughout the next nineteen chapters depends upon the choices made here.</p></section>
+
+    <section class="wide-panel"><p class="eyebrow">The Question</p><h2>Can one family create a foundation strong enough for a civilization to grow?</h2><p>During this chapter, the entire civilization consists of one household. Every meal must be earned, every improvement must be built, and every relationship outside the Dynasty must be sought beyond its borders.</p></section>
 
     <section class="content-grid two-column">
-      <article class="panel">
-        <p class="eyebrow">Required Aspiration</p>
-        <h2>Country Caretaker</h2>
-      </article>
-
-      <article class="panel">
-        <p class="eyebrow">Required Traits</p>
-        <h2>Founder Identity</h2>
-        <ul>
-          <li>Animal Enthusiast</li>
-          <li>Erratic</li>
-          <li>One Lifestyle trait of your choice</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <p class="eyebrow">Required Likes</p>
-        <h2>Skills of Survival</h2>
-        <ul>
-          <li>Gardening</li>
-          <li>Fishing</li>
-          <li>Handiness</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <p class="eyebrow">Required Dislikes</p>
-        <h2>Life Before Technology</h2>
-        <ul>
-          <li>Video Gaming</li>
-          <li>Programming</li>
-        </ul>
-        <p>Choose two additional Likes and one additional Dislike.</p>
-      </article>
+      <article class="panel"><p class="eyebrow">Required Aspiration</p><h2>Country Caretaker</h2></article>
+      <article class="panel"><p class="eyebrow">Required Traits</p><h2>Founder Identity</h2><ul><li>Animal Enthusiast</li><li>Erratic</li><li>One Lifestyle trait of your choice</li></ul></article>
+      <article class="panel"><p class="eyebrow">Required Likes</p><h2>Skills of Survival</h2><ul><li>Gardening</li><li>Fishing</li><li>Handiness</li></ul></article>
+      <article class="panel"><p class="eyebrow">Required Dislikes</p><h2>Life Before Technology</h2><ul><li>Video Gaming</li><li>Programming</li></ul><p>Choose two additional Likes and one additional Dislike.</p></article>
     </section>
 
-    <section class="wide-panel">
-      <p class="eyebrow">Visual Identity</p>
-      <h2>A humble beginning</h2>
-      <p>
-        Begin in a Tier 1 Micro Home. The architecture may resemble a tiny farmhouse,
-        cabin, cottage, or practical homestead. Use simple interiors, natural
-        materials, limited decoration, and clothing suited to work rather than luxury.
-        Brown, green, cream, and white are suggested, but the story matters more than
-        strict colors.
-      </p>
-    </section>
+    <section class="wide-panel"><p class="eyebrow">Visual Identity</p><h2>A humble beginning</h2><p>Begin in a Tier 1 Micro Home. The architecture may resemble a tiny farmhouse, cabin, cottage, or practical homestead. Use simple interiors, natural materials, limited decoration, and clothing suited to work rather than luxury. Brown, green, cream, and white are suggested, but the story matters more than strict colors.</p></section>
 
     <section class="wide-panel">
-      <p class="eyebrow">Chapter Rules</p>
-      <h2>Survive through your own labor</h2>
-
-      <div class="rule-block">
-        <h3>No traditional careers</h3>
-        <p>
-          Neither founder may join a standard career during this chapter. Income must
-          come through the work of the household.
-        </p>
-      </div>
-
-      <div class="rule-block">
-        <h3>Acceptable income</h3>
-        <p>
-          Gardening, livestock, fishing, foraging, cross stitch, woodworking, nectar
-          making, crafted goods, and collectibles are permitted.
-        </p>
-      </div>
-
-      <div class="rule-block">
-        <h3>Foreign trade</h3>
-        <p>
-          The civilization does not yet have a marketplace. When practical, travel to
-          another world to sell goods. These worlds represent established neighboring
-          civilizations.
-        </p>
-      </div>
-
-      <div class="rule-block">
-        <h3>The homestead</h3>
-        <p>
-          The first home should grow naturally alongside the Dynasty. Necessity comes
-          before luxury.
-        </p>
-      </div>
+      <p class="eyebrow">Chapter Rules</p><h2>Survive through your own labor</h2>
+      <div class="rule-block"><h3>No traditional careers</h3><p>Neither founder may join a standard career during this chapter. Income must come through the work of the household.</p></div>
+      <div class="rule-block"><h3>Self-sufficient food</h3><p>Do not purchase ingredients that could have been grown, gathered, caught, or produced by the household.</p></div>
+      <div class="rule-block"><h3>Acceptable income</h3><p>Gardening, livestock, fishing, foraging, cross stitch, woodworking, nectar making, crafted goods, and collectibles are permitted.</p></div>
+      <div class="rule-block"><h3>Foreign trade</h3><p>The civilization does not yet have a marketplace. When practical, travel to another world to sell goods. These worlds represent established neighboring civilizations.</p></div>
+      <div class="rule-block"><h3>The homestead</h3><p>The first home should grow naturally alongside the Dynasty. Necessity comes before luxury.</p></div>
     </section>
 
     <section class="wide-panel checklist-panel">
-      <div class="section-heading-row">
-        <div>
-          <p class="eyebrow">Required Objectives</p>
-          <h2>Complete before Chapter II</h2>
-        </div>
-        <button class="text-button danger" id="resetChecklistButton" type="button">Reset checklist</button>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Family</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="family-heir" /><span>Produce the next heir.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="family-young-adult" /><span>Raise the heir to Young Adult.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="family-development" /><span>Complete all required heir development under the Universal Rules.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Skills</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="skill-gardening" /><span>Reach Level 10 Gardening.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="skill-handiness" /><span>Reach Level 10 Handiness.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="skill-fishing" /><span>Reach Level 5 Fishing.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="skill-cooking" /><span>Reach Level 5 Cooking.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Livestock</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="animal-cow" /><span>Own a cow at least once.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="animal-llama" /><span>Own a llama at least once.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="animal-chicken" /><span>Own a chicken at least once.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="animal-goat" /><span>Own a goat at least once.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Aspiration</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="aspiration-country-caretaker" /><span>Complete the Country Caretaker aspiration.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Homestead</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="home-micro" /><span>Begin in a Tier 1 Micro Home.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="home-expand" /><span>Expand the original Micro Home as the family grows.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="home-garden" /><span>Create a dedicated garden.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="home-shelter" /><span>Build an animal barn or shelter.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="home-sustainable" /><span>Establish enough food production to sustain the household.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Wealth</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="wealth-25000" /><span>Earn a lifetime total of §25,000. Current household balance does not matter.</span></label>
-      </div>
-
-      <div class="checklist-group">
-        <h3>Civilization</h3>
-        <label class="check-item"><input type="checkbox" data-check-id="civilization-treasury" /><span>Establish the Civilization Treasury.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="civilization-chronicle" /><span>Record the Dynasty in the Civilization Chronicle.</span></label>
-        <label class="check-item"><input type="checkbox" data-check-id="civilization-site" /><span>Choose the future location of the first civilization institution.</span></label>
-      </div>
+      <div class="section-heading-row"><div><p class="eyebrow">Required Objectives</p><h2>Complete before Chapter II</h2></div><button class="text-button danger" id="resetChecklistButton" type="button">Reset checklist</button></div>
+      <div class="checklist-group"><h3>Family</h3><label class="check-item"><input type="checkbox" data-check-id="family-heir" /><span>Produce the next heir.</span></label><label class="check-item"><input type="checkbox" data-check-id="family-young-adult" /><span>Raise the heir to Young Adult.</span></label><label class="check-item"><input type="checkbox" data-check-id="family-development" /><span>Complete all required heir development under the Universal Rules.</span></label></div>
+      <div class="checklist-group"><h3>Skills</h3><label class="check-item"><input type="checkbox" data-check-id="skill-gardening" /><span>Reach Level 10 Gardening.</span></label><label class="check-item"><input type="checkbox" data-check-id="skill-handiness" /><span>Reach Level 10 Handiness.</span></label><label class="check-item"><input type="checkbox" data-check-id="skill-fishing" /><span>Reach Level 5 Fishing.</span></label><label class="check-item"><input type="checkbox" data-check-id="skill-cooking" /><span>Reach Level 5 Cooking.</span></label></div>
+      <div class="checklist-group"><h3>Livestock</h3><label class="check-item"><input type="checkbox" data-check-id="animal-cow" /><span>Own a cow at least once.</span></label><label class="check-item"><input type="checkbox" data-check-id="animal-llama" /><span>Own a llama at least once.</span></label><label class="check-item"><input type="checkbox" data-check-id="animal-chicken" /><span>Own a chicken at least once.</span></label><label class="check-item"><input type="checkbox" data-check-id="animal-goat" /><span>Own a goat at least once.</span></label></div>
+      <div class="checklist-group"><h3>Aspiration</h3><label class="check-item"><input type="checkbox" data-check-id="aspiration-country-caretaker" /><span>Complete the Country Caretaker aspiration.</span></label></div>
+      <div class="checklist-group"><h3>Homestead</h3><label class="check-item"><input type="checkbox" data-check-id="home-expand" /><span>Expand the original Micro Home as the family grows.</span></label><label class="check-item"><input type="checkbox" data-check-id="home-garden" /><span>Create a dedicated garden.</span></label><label class="check-item"><input type="checkbox" data-check-id="home-shelter" /><span>Build an animal barn or shelter.</span></label><label class="check-item"><input type="checkbox" data-check-id="home-sustainable" /><span>Establish enough food production to sustain the household.</span></label></div>
+      <div class="checklist-group"><h3>Wealth</h3><label class="check-item"><input type="checkbox" data-check-id="wealth-25000" /><span>Earn a lifetime total of §25,000. Current household balance does not matter.</span></label></div>
+      <div class="checklist-group"><h3>Civilization</h3><label class="check-item"><input type="checkbox" data-check-id="civilization-treasury" /><span>Establish the Civilization Treasury.</span></label><label class="check-item"><input type="checkbox" data-check-id="civilization-chronicle" /><span>Record the Dynasty in the Civilization Chronicle.</span></label><label class="check-item"><input type="checkbox" data-check-id="civilization-site" /><span>Choose the future location of the first Civic Institution. Do not build it yet.</span></label></div>
     </section>
 
-    <section class="wide-panel">
-      <p class="eyebrow">Optional Achievements</p>
-      <h2>For Chroniclers seeking a harder beginning</h2>
-      <ul class="achievement-list">
-        <li>Never hire a service.</li>
-        <li>Never purchase ingredients that could have been grown or produced.</li>
-        <li>Never lose a farm animal.</li>
-        <li>Grow every crop to Excellent quality.</li>
-        <li>Complete the chapter without using a traditional career.</li>
-      </ul>
+    <section class="wide-panel optional-achievements"><p class="eyebrow">Optional Achievements</p><h2>For Chroniclers seeking a harder beginning</h2><div class="achievement-checklist"><label class="check-item"><input type="checkbox" data-achievement-id="no-services" /><span>Complete the chapter without hiring any services.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="animal-friendship" /><span>Raise every owned farm animal to maximum friendship.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="perfect-crop" /><span>Grow at least one Perfect-quality crop.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="wealth-50000" /><span>Finish Chapter I with §50,000 in lifetime earnings instead of §25,000.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="early-aspiration" /><span>Complete the Founder’s aspiration before the heir becomes a Teen.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="stable-household" /><span>Survive the entire chapter without repossession, utility shutoff, or unpaid bills.</span></label><label class="check-item"><input type="checkbox" data-achievement-id="all-living" /><span>End the chapter with every member of the founding household still living.</span></label></div></section>
+
+    <section class="wide-panel chronicle-panel">
+      <div class="section-heading-row"><div><p class="eyebrow">The Chronicle</p><h2>Chapter I Family Archive</h2></div><span class="save-indicator" id="saveIndicator">Saved locally</span></div><p>Preserve the people and events that made this generation unique. Add as many partners and children as your story requires.</p>
+      <div class="profile-section"><h3>Founder Profile</h3><div class="profile-editor primary-profile" data-profile="founder"><div class="portrait-editor"><img id="founderPhotoPreview" class="portrait-preview" alt="Founder portrait preview" /><label class="upload-button">Add portrait<input id="founderPhoto" type="file" accept="image/*" /></label></div><div class="profile-fields"><label>Full name<input id="founderName" type="text" placeholder="Founder name" /></label><label>Traits<input id="founderTraits" type="text" placeholder="Animal Enthusiast, Erratic, ..." /></label><label>Aspiration<input id="founderAspiration" type="text" value="Country Caretaker" /></label><label>Life dates or status<input id="founderLife" type="text" placeholder="Young Adult, 1st Spring – 4th Winter" /></label></div></div><label>What they left behind<textarea id="founderLegacy" rows="4" placeholder="The home, traditions, skills, institutions, heirlooms, or opportunities they left for the next generation"></textarea></label><label>Founder biography<textarea id="founderBiography" rows="6" placeholder="Tell the story of this Founder and their generation"></textarea></label></div>
+      <div class="profile-section"><div class="section-heading-row"><div><h3>Partners</h3><p>Add every spouse or partner who became part of this chapter.</p></div><button class="button secondary small-button" id="addPartnerButton" type="button">Add Partner</button></div><div id="partnersList" class="dynamic-profile-list"></div></div>
+      <div class="profile-section"><div class="section-heading-row"><div><h3>Children</h3><p>Add every child in birth order, including children who did not inherit.</p></div><button class="button secondary small-button" id="addChildButton" type="button">Add Child</button></div><div id="childrenList" class="dynamic-profile-list"></div></div>
+      <div class="profile-section succession-section"><h3>Succession Record</h3><div class="form-grid"><label>Who became the heir?<input id="chosenHeir" type="text" placeholder="Heir name" /></label><label>Birth order<input id="heirBirthOrder" type="text" placeholder="Oldest child, second child, etc." /></label></div><label>Why did they inherit?<textarea id="heirReason" rows="4" placeholder="Record the succession story, including deaths, changes, or unexpected circumstances"></textarea></label></div>
+      <div class="profile-section"><h3>Chapter Chronicle Entry</h3><label>What happened during this generation?<textarea id="chapterChronicle" rows="9" placeholder="Triumphs, losses, relationships, accidents, traditions, turning points, and everything worth remembering"></textarea></label></div>
     </section>
 
-    <section class="wide-panel">
-      <p class="eyebrow">Legacy Left Behind</p>
-      <h2>The Founder proves civilization can exist.</h2>
-      <p>
-        At the end of Chapter I, the Dynasty should leave behind its first home, a
-        thriving homestead, a stable source of food, a child prepared to continue the
-        work, and a vision for the civilization still to come.
-      </p>
-      <p>
-        Completing this chapter prepares the civilization for Chapter II: The Age of
-        Community, when new households may begin arriving and the first institution
-        can be constructed.
-      </p>
-    </section>
+    <section class="wide-panel"><p class="eyebrow">Legacy Left Behind</p><h2>The Founder proves civilization can exist.</h2><p>At the end of Chapter I, the Dynasty should leave behind its first home, a thriving homestead, a stable source of food, a child prepared to continue the work, and a vision for the civilization still to come.</p><p>Completing this chapter unlocks Chapter II: The Settler, The Age of Community. New households may begin arriving, local commerce takes shape, and the Marketplace becomes the first Civic Institution available for construction.</p></section>
+
+    <nav class="chapter-navigation" aria-label="Chapter navigation"><button class="button secondary" type="button" disabled>Previous Chapter</button><div class="chapter-nav-status"><span>Chapter I</span><strong id="chapterCompletionStatus">In Progress</strong></div><button class="button primary" id="nextChapterButton" type="button" disabled>Next Chapter</button></nav>
   </main>
 
-  <footer>
-    <p>Your checklist is stored locally in this browser.</p>
-  </footer>
-
+  <footer><p>Your checklist, treasury, portraits, and Chronicle are stored locally in this browser.</p></footer>
   <script src="chapters.js"></script>
 </body>
 </html>
