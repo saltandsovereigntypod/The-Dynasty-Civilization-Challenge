@@ -1,180 +1,25 @@
-const CHAPTER_KEY = "dynastyCivilizationChapterOne";
-const TREASURY_KEY = "dynastyCivilizationTreasury";
-const checkboxes = [...document.querySelectorAll("[data-check-id]")];
-const achievements = [...document.querySelectorAll("[data-achievement-id]")];
-
-function loadJson(key, fallback) {
-  try {
-    const value = JSON.parse(localStorage.getItem(key));
-    return value && typeof value === "object" ? value : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-const defaultChapterState = () => ({
-  objectives: {}, achievements: {}, founder: { photo: "", name: "", traits: "", aspiration: "Country Caretaker", life: "", legacy: "", biography: "" },
-  partners: [], children: [], succession: { heir: "", birthOrder: "", reason: "" }, chronicle: ""
-});
-
-let chapterState = { ...defaultChapterState(), ...loadJson(CHAPTER_KEY, {}) };
-chapterState.founder = { ...defaultChapterState().founder, ...(chapterState.founder || {}) };
-chapterState.succession = { ...defaultChapterState().succession, ...(chapterState.succession || {}) };
-chapterState.partners = Array.isArray(chapterState.partners) ? chapterState.partners : [];
-chapterState.children = Array.isArray(chapterState.children) ? chapterState.children : [];
-chapterState.objectives = chapterState.objectives || {};
-chapterState.achievements = chapterState.achievements || {};
-
-function saveChapter() {
-  localStorage.setItem(CHAPTER_KEY, JSON.stringify(chapterState));
-  const indicator = document.getElementById("saveIndicator");
-  indicator.textContent = "Saved locally";
-  indicator.classList.add("saved-flash");
-  window.setTimeout(() => indicator.classList.remove("saved-flash"), 500);
-}
-
-function updateProgress() {
-  const complete = checkboxes.filter((box) => box.checked).length;
-  const total = checkboxes.length;
-  const percent = total ? Math.round((complete / total) * 100) : 0;
-  document.getElementById("progressText").textContent = `${complete} of ${total} complete`;
-  document.getElementById("progressBar").style.width = `${percent}%`;
-  document.getElementById("chapterCompletionStatus").textContent = complete === total ? "Complete" : "In Progress";
-  document.getElementById("nextChapterButton").disabled = complete !== total;
-}
-
-checkboxes.forEach((box) => {
-  box.checked = Boolean(chapterState.objectives[box.dataset.checkId]);
-  box.addEventListener("change", () => {
-    chapterState.objectives[box.dataset.checkId] = box.checked;
-    saveChapter();
-    updateProgress();
-  });
-});
-
-achievements.forEach((box) => {
-  box.checked = Boolean(chapterState.achievements[box.dataset.achievementId]);
-  box.addEventListener("change", () => {
-    chapterState.achievements[box.dataset.achievementId] = box.checked;
-    saveChapter();
-  });
-});
-
-document.getElementById("resetChecklistButton").addEventListener("click", () => {
-  if (!window.confirm("Reset every Chapter I objective?")) return;
-  chapterState.objectives = {};
-  checkboxes.forEach((box) => { box.checked = false; });
-  saveChapter();
-  updateProgress();
-});
-
-const textBindings = {
-  founderName: ["founder", "name"], founderTraits: ["founder", "traits"], founderAspiration: ["founder", "aspiration"],
-  founderLife: ["founder", "life"], founderLegacy: ["founder", "legacy"], founderBiography: ["founder", "biography"],
-  chosenHeir: ["succession", "heir"], heirBirthOrder: ["succession", "birthOrder"], heirReason: ["succession", "reason"]
-};
-
-Object.entries(textBindings).forEach(([id, [group, field]]) => {
-  const element = document.getElementById(id);
-  element.value = chapterState[group][field] || "";
-  element.addEventListener("input", () => { chapterState[group][field] = element.value; saveChapter(); });
-});
-
-const chronicle = document.getElementById("chapterChronicle");
-chronicle.value = chapterState.chronicle || "";
-chronicle.addEventListener("input", () => { chapterState.chronicle = chronicle.value; saveChapter(); });
-
-function setPortrait(preview, value) {
-  preview.src = value || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23e2ddcf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236a6a5e' font-family='sans-serif' font-size='22'%3EPortrait%3C/text%3E%3C/svg%3E";
-}
-
-function readImage(file, callback) {
-  if (!file) return;
-  if (file.size > 2.5 * 1024 * 1024) { window.alert("Please choose an image smaller than 2.5 MB."); return; }
-  const reader = new FileReader();
-  reader.onload = () => callback(reader.result);
-  reader.readAsDataURL(file);
-}
-
-const founderPreview = document.getElementById("founderPhotoPreview");
-setPortrait(founderPreview, chapterState.founder.photo);
-document.getElementById("founderPhoto").addEventListener("change", (event) => {
-  readImage(event.target.files[0], (data) => { chapterState.founder.photo = data; setPortrait(founderPreview, data); saveChapter(); });
-});
-
-function newPerson() { return { id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`, photo: "", name: "", traits: "", aspiration: "", life: "", notes: "" }; }
-
-function createPersonCard(person, type, index) {
-  const card = document.createElement("article");
-  card.className = "person-card";
-  card.innerHTML = `
-    <div class="person-card-heading"><h4>${type === "partners" ? "Partner" : "Child"} ${index + 1}</h4><button class="text-button danger remove-person" type="button">Remove</button></div>
-    <div class="profile-editor">
-      <div class="portrait-editor"><img class="portrait-preview" alt="${type === "partners" ? "Partner" : "Child"} portrait preview" /><label class="upload-button">Add portrait<input class="person-photo" type="file" accept="image/*" /></label></div>
-      <div class="profile-fields">
-        <label>Full name<input class="person-name" type="text" placeholder="Full name" /></label>
-        <label>Traits<input class="person-traits" type="text" placeholder="Traits" /></label>
-        <label>Aspiration<input class="person-aspiration" type="text" placeholder="Aspiration" /></label>
-        <label>${type === "children" ? "Birth order or status" : "Life dates or status"}<input class="person-life" type="text" placeholder="${type === "children" ? "First child, second child, etc." : "Spouse, former partner, deceased, etc."}" /></label>
-      </div>
-    </div>
-    <label>Notes<textarea class="person-notes" rows="4" placeholder="Their role, relationship, accomplishments, or story"></textarea></label>`;
-
-  const preview = card.querySelector(".portrait-preview");
-  setPortrait(preview, person.photo);
-  const fields = { name: ".person-name", traits: ".person-traits", aspiration: ".person-aspiration", life: ".person-life", notes: ".person-notes" };
-  Object.entries(fields).forEach(([field, selector]) => {
-    const input = card.querySelector(selector);
-    input.value = person[field] || "";
-    input.addEventListener("input", () => { person[field] = input.value; saveChapter(); });
-  });
-  card.querySelector(".person-photo").addEventListener("change", (event) => {
-    readImage(event.target.files[0], (data) => { person.photo = data; setPortrait(preview, data); saveChapter(); });
-  });
-  card.querySelector(".remove-person").addEventListener("click", () => {
-    chapterState[type] = chapterState[type].filter((entry) => entry.id !== person.id);
-    saveChapter();
-    renderPeople(type);
-  });
-  return card;
-}
-
-function renderPeople(type) {
-  const list = document.getElementById(type === "partners" ? "partnersList" : "childrenList");
-  list.innerHTML = "";
-  if (!chapterState[type].length) list.innerHTML = `<p class="empty-state">No ${type} added yet.</p>`;
-  chapterState[type].forEach((person, index) => list.appendChild(createPersonCard(person, type, index)));
-}
-
-document.getElementById("addPartnerButton").addEventListener("click", () => { chapterState.partners.push(newPerson()); saveChapter(); renderPeople("partners"); });
-document.getElementById("addChildButton").addEventListener("click", () => { chapterState.children.push(newPerson()); saveChapter(); renderPeople("children"); });
-renderPeople("partners");
-renderPeople("children");
-
-function defaultTreasury() { return { balance: 0, households: 0, taxRate: 100, transactions: [] }; }
-let treasury = { ...defaultTreasury(), ...loadJson(TREASURY_KEY, {}) };
-const balance = document.getElementById("chapterTreasuryBalance");
-const households = document.getElementById("chapterHouseholdCount");
-const rate = document.getElementById("chapterTaxRate");
-const preview = document.getElementById("chapterTaxPreview");
-const taxStatus = document.getElementById("chapterTaxStatus");
-const money = (amount) => `§${Math.abs(amount).toLocaleString()}`;
-function saveTreasury() { localStorage.setItem(TREASURY_KEY, JSON.stringify(treasury)); }
-function renderTreasury() {
-  balance.textContent = money(treasury.balance);
-  households.value = treasury.households;
-  rate.value = treasury.taxRate;
-  preview.textContent = `Weekly collection: ${money(treasury.households * treasury.taxRate)}`;
-}
-households.addEventListener("input", () => { treasury.households = Math.max(0, Number(households.value) || 0); saveTreasury(); renderTreasury(); });
-rate.addEventListener("input", () => { treasury.taxRate = Math.max(0, Number(rate.value) || 0); saveTreasury(); renderTreasury(); });
-document.getElementById("chapterPayTaxesButton").addEventListener("click", () => {
-  const amount = treasury.households * treasury.taxRate;
-  if (amount <= 0) { taxStatus.textContent = "Enter at least one outside household and a tax rate above zero."; return; }
-  treasury.balance += amount;
-  treasury.transactions.push({ amount, reason: `Weekly taxes from ${treasury.households} household${treasury.households === 1 ? "" : "s"}`, date: new Date().toISOString() });
-  saveTreasury(); renderTreasury(); taxStatus.textContent = `${money(amount)} was added to the treasury.`;
-});
-
-renderTreasury();
-updateProgress();
+const companionStyles=document.createElement("link");companionStyles.rel="stylesheet";companionStyles.href="chronicle.css";document.head.appendChild(companionStyles);
+const CHAPTER_KEY="dynastyCivilizationChapterOne",TREASURY_KEY="dynastyCivilizationTreasury";
+const checkboxes=[...document.querySelectorAll("[data-check-id]")],achievements=[...document.querySelectorAll("[data-achievement-id]")];
+function loadJson(key,fallback){try{const value=JSON.parse(localStorage.getItem(key));return value&&typeof value==="object"?value:fallback}catch{return fallback}}
+const defaultChapterState=()=>({objectives:{},achievements:{},founder:{photo:"",name:"",traits:"",aspiration:"Country Caretaker",life:"",legacy:"",biography:""},partners:[],children:[],succession:{heir:"",birthOrder:"",reason:""},chronicle:""});
+let chapterState={...defaultChapterState(),...loadJson(CHAPTER_KEY,{})};
+chapterState.founder={...defaultChapterState().founder,...(chapterState.founder||{})};chapterState.succession={...defaultChapterState().succession,...(chapterState.succession||{})};chapterState.partners=Array.isArray(chapterState.partners)?chapterState.partners:[];chapterState.children=Array.isArray(chapterState.children)?chapterState.children:[];chapterState.objectives=chapterState.objectives||{};chapterState.achievements=chapterState.achievements||{};
+function saveChapter(){localStorage.setItem(CHAPTER_KEY,JSON.stringify(chapterState));const indicator=document.getElementById("saveIndicator");indicator.textContent="Saved locally";indicator.classList.add("saved-flash");window.setTimeout(()=>indicator.classList.remove("saved-flash"),500)}
+function updateProgress(){const complete=checkboxes.filter(box=>box.checked).length,total=checkboxes.length,percent=total?Math.round(complete/total*100):0;document.getElementById("progressText").textContent=`${complete} of ${total} complete`;document.getElementById("progressBar").style.width=`${percent}%`;document.getElementById("chapterCompletionStatus").textContent=complete===total?"Complete":"In Progress";document.getElementById("nextChapterButton").disabled=complete!==total}
+checkboxes.forEach(box=>{box.checked=Boolean(chapterState.objectives[box.dataset.checkId]);box.addEventListener("change",()=>{chapterState.objectives[box.dataset.checkId]=box.checked;saveChapter();updateProgress()})});
+achievements.forEach(box=>{box.checked=Boolean(chapterState.achievements[box.dataset.achievementId]);box.addEventListener("change",()=>{chapterState.achievements[box.dataset.achievementId]=box.checked;saveChapter()})});
+document.getElementById("resetChecklistButton").addEventListener("click",()=>{if(!window.confirm("Reset every Chapter I objective?"))return;chapterState.objectives={};checkboxes.forEach(box=>box.checked=false);saveChapter();updateProgress()});
+const textBindings={founderName:["founder","name"],founderTraits:["founder","traits"],founderAspiration:["founder","aspiration"],founderLife:["founder","life"],founderLegacy:["founder","legacy"],founderBiography:["founder","biography"],chosenHeir:["succession","heir"],heirBirthOrder:["succession","birthOrder"],heirReason:["succession","reason"]};
+Object.entries(textBindings).forEach(([id,[group,field]])=>{const element=document.getElementById(id);element.value=chapterState[group][field]||"";element.addEventListener("input",()=>{chapterState[group][field]=element.value;saveChapter()})});
+const chronicle=document.getElementById("chapterChronicle");chronicle.value=chapterState.chronicle||"";chronicle.addEventListener("input",()=>{chapterState.chronicle=chronicle.value;saveChapter()});
+function setPortrait(preview,value){preview.src=value||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23e2ddcf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236a6a5e' font-family='sans-serif' font-size='22'%3EPortrait%3C/text%3E%3C/svg%3E"}
+function readImage(file,callback){if(!file)return;if(file.size>2.5*1024*1024){window.alert("Please choose an image smaller than 2.5 MB.");return}const reader=new FileReader();reader.onload=()=>callback(reader.result);reader.readAsDataURL(file)}
+const founderPreview=document.getElementById("founderPhotoPreview");setPortrait(founderPreview,chapterState.founder.photo);document.getElementById("founderPhoto").addEventListener("change",event=>readImage(event.target.files[0],data=>{chapterState.founder.photo=data;setPortrait(founderPreview,data);saveChapter()}));
+function newPerson(){return{id:crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`,photo:"",name:"",traits:"",aspiration:"",life:"",notes:""}}
+function createPersonCard(person,type,index){const card=document.createElement("article");card.className="person-card";card.innerHTML=`<div class="person-card-heading"><h4>${type==="partners"?"Partner":"Child"} ${index+1}</h4><button class="text-button danger remove-person" type="button">Remove</button></div><div class="profile-editor"><div class="portrait-editor"><img class="portrait-preview" alt="Portrait preview" /><label class="upload-button">Add portrait<input class="person-photo" type="file" accept="image/*" /></label></div><div class="profile-fields"><label>Full name<input class="person-name" type="text" placeholder="Full name" /></label><label>Traits<input class="person-traits" type="text" placeholder="Traits" /></label><label>Aspiration<input class="person-aspiration" type="text" placeholder="Aspiration" /></label><label>${type==="children"?"Birth order or status":"Life dates or status"}<input class="person-life" type="text" placeholder="${type==="children"?"First child, second child, etc.":"Spouse, former partner, deceased, etc."}" /></label></div></div><label>Notes<textarea class="person-notes" rows="4" placeholder="Their role, relationship, accomplishments, or story"></textarea></label>`;const preview=card.querySelector(".portrait-preview");setPortrait(preview,person.photo);const fields={name:".person-name",traits:".person-traits",aspiration:".person-aspiration",life:".person-life",notes:".person-notes"};Object.entries(fields).forEach(([field,selector])=>{const input=card.querySelector(selector);input.value=person[field]||"";input.addEventListener("input",()=>{person[field]=input.value;saveChapter()})});card.querySelector(".person-photo").addEventListener("change",event=>readImage(event.target.files[0],data=>{person.photo=data;setPortrait(preview,data);saveChapter()}));card.querySelector(".remove-person").addEventListener("click",()=>{chapterState[type]=chapterState[type].filter(entry=>entry.id!==person.id);saveChapter();renderPeople(type)});return card}
+function renderPeople(type){const list=document.getElementById(type==="partners"?"partnersList":"childrenList");list.innerHTML="";if(!chapterState[type].length)list.innerHTML=`<p class="empty-state">No ${type} added yet.</p>`;chapterState[type].forEach((person,index)=>list.appendChild(createPersonCard(person,type,index)))}
+document.getElementById("addPartnerButton").addEventListener("click",()=>{chapterState.partners.push(newPerson());saveChapter();renderPeople("partners")});document.getElementById("addChildButton").addEventListener("click",()=>{chapterState.children.push(newPerson());saveChapter();renderPeople("children")});renderPeople("partners");renderPeople("children");
+function defaultTreasury(){return{balance:0,households:0,taxRate:100,transactions:[]}}let treasury={...defaultTreasury(),...loadJson(TREASURY_KEY,{})};const balance=document.getElementById("chapterTreasuryBalance"),households=document.getElementById("chapterHouseholdCount"),rate=document.getElementById("chapterTaxRate"),preview=document.getElementById("chapterTaxPreview"),taxStatus=document.getElementById("chapterTaxStatus"),money=amount=>`§${Math.abs(amount).toLocaleString()}`;function saveTreasury(){localStorage.setItem(TREASURY_KEY,JSON.stringify(treasury))}function renderTreasury(){balance.textContent=money(treasury.balance);households.value=treasury.households;rate.value=treasury.taxRate;preview.textContent=`Weekly collection: ${money(treasury.households*treasury.taxRate)}`}
+households.addEventListener("input",()=>{treasury.households=Math.max(0,Number(households.value)||0);saveTreasury();renderTreasury()});rate.addEventListener("input",()=>{treasury.taxRate=Math.max(0,Number(rate.value)||0);saveTreasury();renderTreasury()});document.getElementById("chapterPayTaxesButton").addEventListener("click",()=>{const amount=treasury.households*treasury.taxRate;if(amount<=0){taxStatus.textContent="Enter at least one outside household and a tax rate above zero.";return}treasury.balance+=amount;treasury.transactions.push({amount,reason:`Weekly taxes from ${treasury.households} household${treasury.households===1?"":"s"}`,date:new Date().toISOString()});saveTreasury();renderTreasury();taxStatus.textContent=`${money(amount)} was added to the treasury.`});
+renderTreasury();updateProgress();
