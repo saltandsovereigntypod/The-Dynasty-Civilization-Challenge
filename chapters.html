@@ -7,7 +7,7 @@
   <title>Chapters | The Dynasty & Civilization Challenge</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="chapter-page chapter-one">
   <header class="site-header">
     <a class="brand" href="index.html">The Dynasty & Civilization Challenge</a>
     <nav aria-label="Main navigation">
@@ -30,15 +30,39 @@
       <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-fill"></div></div>
     </section>
 
-    <section class="wide-panel treasury-widget">
-      <div class="section-heading-row"><div><p class="eyebrow">Civilization Treasury</p><h2>Weekly Taxes</h2></div><strong class="widget-balance" id="chapterTreasuryBalance">§0</strong></div>
-      <div class="form-grid treasury-widget-grid">
-        <label>Outside households<input id="chapterHouseholdCount" type="number" min="0" step="1" value="0" /></label>
-        <label>Tax per household<input id="chapterTaxRate" type="number" min="0" step="1" value="100" /></label>
+    <section class="treasury-companion">
+      <div class="treasury-companion-heading">
+        <div><p class="eyebrow">Civilization Treasury</p><h2>Manage Chapter Finances</h2></div>
+        <div class="treasury-balance-display"><span>Current Treasury</span><strong id="chapterTreasuryBalance">§0</strong></div>
       </div>
-      <p class="calculation" id="chapterTaxPreview">Weekly collection: §0</p>
-      <div class="button-row compact-row"><button class="button primary" id="chapterPayTaxesButton" type="button">Collect Weekly Taxes</button><a class="button secondary" href="taxes.html">Open Full Treasury</a></div>
-      <p class="status-message" id="chapterTaxStatus" aria-live="polite"></p>
+
+      <div class="content-grid treasury-action-grid">
+        <article class="panel treasury-action-card">
+          <p class="eyebrow">Income</p>
+          <h2>Collect Weekly Taxes</h2>
+          <div class="form-grid treasury-widget-grid">
+            <label>Outside households<input id="chapterHouseholdCount" type="number" min="0" step="1" value="0" /></label>
+            <label>Tax per household<input id="chapterTaxRate" type="number" min="0" step="1" value="100" /></label>
+          </div>
+          <p class="calculation" id="chapterTaxPreview">Weekly collection: §0</p>
+          <button class="button primary" id="chapterPayTaxesButton" type="button">Collect Weekly Taxes</button>
+          <p class="status-message" id="chapterTaxStatus" aria-live="polite"></p>
+        </article>
+
+        <article class="panel treasury-action-card">
+          <p class="eyebrow">Spending</p>
+          <h2>Record Treasury Spending</h2>
+          <div class="form-grid treasury-widget-grid">
+            <label>Amount spent<input id="chapterExpenseAmount" type="number" min="0" step="1" placeholder="0" /></label>
+            <label>Purpose<input id="chapterExpenseReason" type="text" placeholder="Public building or improvement" /></label>
+          </div>
+          <p class="calculation">Use treasury funds only for public buildings and civilization improvements.</p>
+          <button class="button secondary" id="chapterDeductButton" type="button">Deduct Expense</button>
+          <p class="status-message" id="chapterExpenseStatus" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="treasury-footer-link"><a class="button secondary" href="taxes.html">Open Full Treasury & History</a></div>
     </section>
 
     <section class="wide-panel"><p class="eyebrow">Theme</p><h2>Survival · Self-Sufficiency · Hope</h2><p>Your founders arrive in an untamed land with little more than determination and the hope of building something that will outlive them. There are no neighbors, institutions, or public spaces. There is only a small home, open land, and the responsibility of creating a future where none yet exists.</p><p>Everything that follows throughout the next nineteen chapters depends upon the choices made here.</p></section>
